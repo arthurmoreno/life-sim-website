@@ -6,5 +6,6 @@ module.exports = {
     title: `Life Simulation Game`,
     siteUrl: `https://www.yourdomain.tld`,
   },
+  pathPrefix: "/life-sim-website",
   plugins: [],
 }
