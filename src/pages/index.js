@@ -60,10 +60,10 @@ const IndexPage = () => {
       <section style={sectionStyles}>
         <h1 style={headingStyles}>Welcome to Life Simulation Game</h1>
         <p>
-          The Life-Simulation-Game is an innovative project that employs NEAT (NeuroEvolution of Augmenting Topologies) algorithms to simulate the evolution of artificial life forms. Developed using Python for high-level logic and C++ for performance-critical components, the game engine integrates PyTorch for neural network functionalities and leverages libraries such as EnTT and SDL2 for efficient entity management and rendering.
+          Life Simulation Game is an early prototype that explores artificial life evolution using NEAT (NeuroEvolution of Augmenting Topologies). The engine mixes Python and C++ components to keep development flexible while maintaining performance.
         </p>
         <p>
-          By simulating complex evolutionary processes, the project aims to provide insights into artificial life dynamics and contribute to the broader understanding of evolutionary algorithms.
+          Our goal is to experiment with simple ecosystems and evolving agents. The project is currently closed‑source, but we're excited to grow with feedback from early testers.
         </p>
         <div style={{ marginTop: "2rem" }}>
           {/* Game screenshot */}
@@ -111,21 +111,15 @@ const IndexPage = () => {
               Built with a custom engine combining Python for high-level logic and C++ for performance-critical components.
             </p>
           </div>
-          <div style={featureCardStyles}>
-            <div style={featureIconStyles}>🧪</div>
-            <h3>Neural Networks</h3>
-            <p>
-              Integrates PyTorch for neural network functionalities in life form evolution.
-            </p>
-          </div>
-          <div style={featureCardStyles}>
-            <div style={featureIconStyles}>🎮</div>
-            <h3>Entity Management</h3>
-            <p>
-              Uses EnTT and SDL2 for efficient entity management and rendering.
-            </p>
-          </div>
         </div>
+      </section>
+
+      <section style={sectionStyles}>
+        <h2 style={headingStyles}>Future Goals</h2>
+        <ul>
+          <li>Home building tools</li>
+          <li>Character personality traits</li>
+        </ul>
       </section>
 
       <section style={sectionStyles}>
