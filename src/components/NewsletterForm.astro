@@ -1,0 +1,23 @@
+---
+import Button from './Button.astro';
+import { config, isPlaceholder } from '../lib/site';
+const action = config.links.newsletter;
+---
+{action && !isPlaceholder(action) ? (
+  <form class="nl" action={action} method="post" target="_blank">
+    <label class="rr-sr" for="nl-email">Email address</label>
+    <input id="nl-email" type="email" name="email" required placeholder="you@example.com" autocomplete="email" />
+    <Button type="submit">Subscribe</Button>
+    <p class="note">New devlog posts and build announcements. No spam, one click to leave.</p>
+  </form>
+) : (
+  <p class="soon">The newsletter opens with the first public build. For now, the <a href="rss.xml">RSS feed</a> is the way to follow along.</p>
+)}
+<style>
+  .nl { display: grid; gap: var(--rr-space-3); grid-template-columns: 1fr auto; max-width: 520px; }
+  input { font: inherit; padding: 12px 14px; min-height: 48px; background: var(--rr-bg); color: var(--rr-text); border: var(--rr-border); border-radius: 2px; }
+  input:focus-visible { box-shadow: var(--rr-focus); }
+  .note { grid-column: 1 / -1; color: var(--rr-text-muted); font-size: var(--rr-text-sm); margin: 0; }
+  .soon { color: var(--rr-text-muted); margin: 0; }
+  @media (max-width: 480px) { .nl { grid-template-columns: 1fr; } }
+</style>

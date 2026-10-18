@@ -1,0 +1,16 @@
+---
+import { config, isPlaceholder, url } from '../lib/site';
+const defs: [keyof typeof config.links, string][] = [
+  ['itch', 'itch.io'], ['youtube', 'YouTube'], ['bluesky', 'Bluesky'], ['discord', 'Discord'], ['github', 'GitHub'],
+];
+const items = defs.filter(([k]) => config.links[k] && !isPlaceholder(config.links[k])).map(([k, l]) => ({ href: config.links[k]!, label: l }));
+items.push({ href: url('devlog/rss.xml'), label: 'RSS' });
+---
+<ul class="social">
+  {items.map((i) => <li><a href={i.href} rel="noopener">{i.label}</a></li>)}
+</ul>
+<style>
+  .social { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--rr-space-2) var(--rr-space-5); }
+  a { font: 500 var(--rr-text-sm) var(--rr-font-display); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>

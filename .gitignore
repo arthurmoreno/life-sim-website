@@ -1,3 +1,8 @@
 node_modules/
-.cache/
-public
+dist/
+.astro/
+public/press/*.zip
+life-simulation-game/
+legacy-gatsby/node_modules/
+legacy-gatsby/public-build/
+legacy-gatsby/.cache/

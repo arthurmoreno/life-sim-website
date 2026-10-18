@@ -1,0 +1,21 @@
+---
+import { url } from '../lib/site';
+interface Props { href: string; label: string; meta?: string; preview?: string; previewW?: number; previewH?: number; dark?: boolean; }
+const { href, label, meta, preview, previewW, previewH, dark = true } = Astro.props;
+---
+<a class="asset" href={url(href)} download>
+  {preview && <span class:list={['pv', !dark && 'light']}><img class="rr-pixel" src={url(preview)} width={previewW} height={previewH} alt="" loading="lazy" /></span>}
+  <span class="lb"><strong>{label}</strong>{meta && <small>{meta}</small>}</span>
+  <span class="dl" aria-hidden="true">↓</span>
+</a>
+<style>
+  .asset { display: grid; grid-template-columns: auto 1fr auto; gap: var(--rr-space-4); align-items: center; padding: var(--rr-space-3) var(--rr-space-4); background: var(--rr-bg-raised); border: var(--rr-border); border-radius: var(--rr-radius); text-decoration: none; color: var(--rr-text); }
+  .asset:not(:has(.pv)) { grid-template-columns: 1fr auto; }
+  .asset:hover { border-color: var(--rr-ember); }
+  .pv { display: grid; place-items: center; width: 96px; height: 96px; background: var(--rr-bg); border: 1px solid var(--rr-panel-border); }
+  .pv.light { background: #e8ecef; }
+  .pv img { max-width: 88px; max-height: 88px; width: auto; height: auto; }
+  .lb { display: grid; gap: 2px; }
+  small { color: var(--rr-text-muted); }
+  .dl { font: 700 1.5rem var(--rr-font-display); color: var(--rr-ember); }
+</style>

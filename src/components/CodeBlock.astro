@@ -1,0 +1,13 @@
+---
+interface Props { title?: string; }
+const { title } = Astro.props;
+---
+<figure class="code">
+  {title && <figcaption>{title}</figcaption>}
+  <pre><slot /></pre>
+</figure>
+<style>
+  .code { margin: var(--rr-space-5) 0; border: var(--rr-border); border-radius: var(--rr-radius); overflow: hidden; background: #060b22; }
+  figcaption { padding: var(--rr-space-2) var(--rr-space-4); background: var(--rr-panel); font: 500 var(--rr-text-xs) var(--rr-font-display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--rr-text-muted); }
+  pre { margin: 0; padding: var(--rr-space-4); overflow-x: auto; font-size: var(--rr-text-sm); line-height: 1.5; }
+</style>

@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PressFactsheet from '../components/PressFactsheet.astro';
+import AssetDownload from '../components/AssetDownload.astro';
+import PixelImage from '../components/PixelImage.astro';
+import { config, url } from '../lib/site';
+const shortDesc = `${config.name} is a pixel-art survival game set in a living wilderness. Water feeds plants, plants feed animals, and creature brains evolve live through neuroevolution. Gather, craft and descend to rewild the world.`;
+const longDesc = `${config.name} is a 2D pixel-art life-simulation survival game built on Aetherion, a custom engine written in C++ and Python by solo developer ${config.developer.name}.\n\nThe world keeps living without you. Water feeds the plants, a bottom-up food chain runs from plants to boars to wolves, and creature brains evolve live through neuroevolution (NEAT). Villages, towns and roads are generated and grow through simulated professions such as hunting, gathering, building, cooking and farming.\n\nYou gather, craft gear and defeat a guardian boss in each biome to unlock the next tier, across the surface and down into caves and mines. The first guardian is the Warden.\n\nThe game is an early prototype. The first public build is Linux-only and free on itch.io.`;
+const features = [
+  'A living ecosystem: water, plants and a visible food chain',
+  'Creatures whose brains evolve live in the world (NEAT)',
+  'Settlements that grow themselves through simulated professions',
+  'Survive, craft and descend, one guardian boss per biome',
+  'Custom C++ / Python engine, built by one developer',
+];
+---
+<Base title="Press kit" description="Fact sheet, descriptions, logos, key art and screenshots of The Rewilding Rite for press and creators.">
+  <div class="rr-wrap rr-section">
+    <SectionHeading level="h1" eyebrow="Press kit" title="Everything you need to cover the game" lede="Copy and paste freely. If you need something that is not here, write to the address below." />
+
+    <h2>Fact sheet</h2>
+    <PressFactsheet />
+
+    <h2>Description</h2>
+    <h3>Short</h3>
+    <div class="copy rr-panel"><p>{shortDesc}</p></div>
+    <h3>Long</h3>
+    <div class="copy rr-panel">{longDesc.split('\n\n').map((p) => <p>{p}</p>)}</div>
+
+    <h2>Features</h2>
+    <ul class="features">{features.map((f) => <li>{f}</li>)}</ul>
+
+    <h2>Trailer</h2>
+    <p class="rr-muted">No trailer yet. It will be listed here when it exists.</p>
+
+    <h2>Logos and key art</h2>
+    <div class="assets">
+      <AssetDownload href="art/keyart/logo.png" label="Logo, wordmark" meta="PNG, transparent, 436 × 56" preview="art/keyart/logo.png" previewW={436} previewH={56} />
+      <AssetDownload href="art/keyart/emblem.png" label="Emblem" meta="PNG, transparent, 96 × 96" preview="art/keyart/emblem.png" previewW={96} previewH={96} />
+      <AssetDownload href="art/keyart/keyart.png" label="Key art" meta="PNG, 600 × 400 (art drawn at 4×)" preview="art/keyart/keyart.png" previewW={600} previewH={400} />
+      <AssetDownload href="art/keyart/banner.png" label="Key art with logo" meta="PNG, 540 × 506" preview="art/keyart/banner.png" previewW={540} previewH={506} />
+    </div>
+
+    <h2>Screenshots</h2>
+    <p class="rr-muted">Art from the game, PNG at native resolution. Real in-game captures replace these with the first public build.</p>
+    <div class="shots">
+      {['warden', 'moccus', 'mirebound', 'salvager', 'cataloguer', 'boar'].map((n) => <a href={url(`art/portraits/${n}.png`)} download><PixelImage src={`art/portraits/${n}.png`} w={384} h={288} alt={`Art: ${n}`} scale={1} sm={1} crop /></a>)}
+    </div>
+    <p class="zip"><AssetDownload href="press/rewilding-rite-presskit.zip" label="Download everything (.zip)" meta="Logos, key art and screenshots" /></p>
+
+    <h2>Credits</h2>
+    <p>Design, code and art direction: {config.developer.name}. Fonts: Pixelify Sans and Atkinson Hyperlegible (SIL Open Font License).</p>
+  </div>
+</Base>
+<style>
+  h2 { margin: var(--rr-space-8) 0 var(--rr-space-4); font-size: var(--rr-text-xl); }
+  h3 { margin: var(--rr-space-4) 0 var(--rr-space-2); color: var(--rr-ember); }
+  .copy { padding: var(--rr-space-5); max-width: 80ch; user-select: all; }
+  .features { padding-left: 1.2em; display: grid; gap: var(--rr-space-2); }
+  .assets { display: grid; gap: var(--rr-space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+  .shots { display: flex; flex-wrap: wrap; gap: var(--rr-space-4); }
+  .shots a { display: block; width: min(384px, 100%); border: var(--rr-border); }
+  .shots :global(.pi-crop) { width: 100%; }
+  .zip { margin-top: var(--rr-space-5); max-width: 520px; }
+</style>

@@ -1,26 +1,27 @@
 {
-  "name": "life-simulation-game",
-  "version": "1.0.0",
+  "name": "rewilding-rite-website",
+  "version": "0.1.0",
   "private": true,
-  "description": "life-simulation-game",
+  "type": "module",
+  "description": "Official website of The Rewilding Rite",
   "author": "Arthur Moreno",
-  "keywords": [
-    "gatsby"
-  ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "dev": "astro dev",
+    "build": "node scripts/build-presskit.mjs && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "sync-assets": "node scripts/sync-assets.mjs"
   },
   "dependencies": {
-    "gatsby": "^5.14.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
+    "@fontsource/pixelify-sans": "^5.3.0",
+    "astro": "^7.3.8",
+    "fflate": "^0.8.3",
+    "js-yaml": "^5.5.0"
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "sharp": "^0.35.5"
   }
 }

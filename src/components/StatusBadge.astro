@@ -1,0 +1,12 @@
+---
+import { statusLine } from '../lib/site';
+---
+<p class="badge"><span class="dot" aria-hidden="true"></span>{statusLine()}</p>
+<style>
+  .badge {
+    display: inline-flex; align-items: center; gap: var(--rr-space-2); margin: 0;
+    font: 500 var(--rr-text-xs) / 1 var(--rr-font-display); letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 8px 12px; border: 2px solid var(--rr-panel-border); border-radius: 2px; background: var(--rr-bg-raised); color: var(--rr-mint);
+  }
+  .dot { width: 8px; height: 8px; background: var(--rr-moss); box-shadow: 0 0 0 2px var(--rr-moss-deep); }
+</style>

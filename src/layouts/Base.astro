@@ -1,0 +1,38 @@
+---
+import '../styles/base.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { config, url } from '../lib/site';
+interface Props { title?: string; description?: string; noindex?: boolean; image?: string; }
+const { title, description = `${config.name} is a ${config.genre.toLowerCase()} game with a living, evolving ecosystem. Early prototype in development.`, noindex = false, image = 'art/keyart/og.png' } = Astro.props;
+const full = title ? `${title} · ${config.name}` : `${config.name} · A world that lives without you`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = new URL(url(image), Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#010424" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={url('art/keyart/emblem.png')} />
+    <link rel="alternate" type="application/rss+xml" title={`${config.name} devlog`} href={url('devlog/rss.xml')} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={full} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={og} />
+  </head>
+  <body>
+    <a class="rr-skip" href="#main">Skip to content</a>
+    <SiteHeader />
+    <main id="main"><slot /></main>
+    <SiteFooter />
+  </body>
+</html>

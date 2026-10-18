@@ -1,0 +1,8 @@
+---
+import Button from './Button.astro';
+import { primaryCta } from '../lib/site';
+interface Props { size?: 'md' | 'lg'; }
+const { size = 'md' } = Astro.props;
+const cta = primaryCta();
+---
+<Button href={cta.href} external={cta.external} size={size} variant="primary"><slot>{cta.label}</slot></Button>

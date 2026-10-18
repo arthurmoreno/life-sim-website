@@ -1,0 +1,47 @@
+/* Design tokens, namespaced --rr-* so a future studio theme can coexist.
+   Base palette: the itch.io page theme (deep navy, GUI panel blue, mint text, amber buttons). */
+:root {
+  --rr-bg: #010424;
+  --rr-bg-raised: #0a1233;
+  --rr-panel: #1e314b;
+  --rr-panel-border: #2f4c6c;
+  --rr-moss: #9bb02f;
+  --rr-moss-deep: #4f5e1f;
+  --rr-ember: #e1a845;
+  --rr-ember-hover: #f2c06a;
+  --rr-ember-ink: #1a1f2e;
+  --rr-ember-shadow: #c57835;
+  --rr-mint: #9ae5d5;
+  --rr-blood: #e0675c;
+  --rr-text: #e8ecef;
+  --rr-text-muted: #a3b2c4;
+
+  --rr-font-display: 'Pixelify Sans', 'Courier New', monospace;
+  --rr-font-body: 'Atkinson Hyperlegible', system-ui, 'Segoe UI', sans-serif;
+
+  --rr-text-xs: 0.8125rem;
+  --rr-text-sm: 0.9375rem;
+  --rr-text-md: 1.0625rem;
+  --rr-text-lg: 1.25rem;
+  --rr-text-xl: 1.625rem;
+  --rr-text-2xl: 2rem;
+  --rr-text-3xl: 2.75rem;
+  --rr-text-4xl: clamp(2.25rem, 6vw, 4rem);
+
+  --rr-space-1: 4px;
+  --rr-space-2: 8px;
+  --rr-space-3: 12px;
+  --rr-space-4: 16px;
+  --rr-space-5: 24px;
+  --rr-space-6: 32px;
+  --rr-space-7: 48px;
+  --rr-space-8: 64px;
+  --rr-space-9: 96px;
+  --rr-space-10: 128px;
+
+  --rr-radius: 4px;
+  --rr-border: 2px solid var(--rr-panel-border);
+  --rr-max: 1200px;
+  --rr-measure: 70ch;
+  --rr-focus: 0 0 0 3px var(--rr-bg), 0 0 0 5px var(--rr-ember);
+}

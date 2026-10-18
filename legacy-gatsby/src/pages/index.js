@@ -60,7 +60,7 @@ const IndexPage = () => {
       <section style={sectionStyles}>
         <h1 style={headingStyles}>Welcome to Life Simulation Game</h1>
         <p>
-          Life Simulation Game is an early prototype that explores artificial life evolution using NEAT (NeuroEvolution of Augmenting Topologies). The engine mixes Python and C++ components to keep development flexible while maintaining performance.
+          The Life-Simulation-Game is an early prototype that employs NEAT (NeuroEvolution of Augmenting Topologies) algorithms to simulate the evolution of artificial life forms. Developed using Python for high-level logic and C++ for performance-critical components, the game engine integrates PyTorch for neural network functionalities and leverages libraries such as EnTT and SDL2 for efficient entity management and rendering.
         </p>
         <p>
           Our goal is to experiment with simple ecosystems and evolving agents. The project is currently closed‑source, but we're excited to grow with feedback from early testers.

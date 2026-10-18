@@ -1,0 +1,33 @@
+---
+interface Props {
+  n: number;
+  title: string;
+  status: 'In the prototype' | 'Partly in the prototype' | 'Coming in the demo';
+  flip?: boolean;
+}
+const { n, title, status, flip = false } = Astro.props;
+---
+<article class:list={['pillar', flip && 'flip']}>
+  <div class="text">
+    <p class="num" aria-hidden="true">0{n}</p>
+    <h3>{title}</h3>
+    <p class="body"><slot /></p>
+    <p class="status" data-status={status}>{status}</p>
+  </div>
+  <div class="media"><slot name="media" /></div>
+</article>
+<style>
+  .pillar { display: grid; gap: var(--rr-space-6); align-items: center; padding-block: var(--rr-space-7); border-top: 2px solid var(--rr-panel); }
+  .text { display: grid; gap: var(--rr-space-3); align-content: center; }
+  .num { font: 700 var(--rr-text-xs) / 1 var(--rr-font-display); letter-spacing: 0.2em; color: var(--rr-ember); margin: 0; }
+  h3 { font-size: var(--rr-text-xl); }
+  .body { color: var(--rr-text-muted); font-size: var(--rr-text-lg); line-height: 1.55; max-width: 46ch; margin: 0; }
+  .status { margin: 0; font: 500 var(--rr-text-xs) / 1 var(--rr-font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rr-moss); }
+  .status[data-status='Coming in the demo'] { color: var(--rr-ember); }
+  .media { position: relative; min-width: 0; border: var(--rr-border); background: var(--rr-bg-raised); }
+  @media (min-width: 900px) {
+    .pillar { grid-template-columns: 1fr 1.7fr; gap: var(--rr-space-8); }
+    .flip .media { order: -1; }
+    .flip { grid-template-columns: 1.7fr 1fr; }
+  }
+</style>

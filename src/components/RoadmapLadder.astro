@@ -1,0 +1,28 @@
+---
+import { roadmap } from '../lib/site';
+const rungs = roadmap.ladder;
+---
+<ol class="ladder">
+  {rungs.map((r, i) => (
+    <li class:list={['rung', r.state]} aria-current={r.state === 'current' ? 'step' : undefined} style={`--i:${i}`}>
+      <div class="step"><span class="n">{i + 1}</span></div>
+      <h3>{r.name}</h3>
+      <p class="where">{r.where}</p>
+      <p class="sum">{r.summary}</p>
+      {r.state === 'current' && <p class="here">You are here</p>}
+    </li>
+  ))}
+</ol>
+<style>
+  .ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--rr-space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); counter-reset: none; }
+  .rung { position: relative; display: grid; gap: var(--rr-space-2); align-content: start; background: var(--rr-bg-raised); border: var(--rr-border); border-radius: var(--rr-radius); padding: var(--rr-space-5); padding-top: calc(var(--rr-space-5) + var(--i) * 6px); }
+  .step { position: absolute; top: 0; left: 0; right: 0; height: calc(var(--i) * 6px + 6px); background: var(--rr-panel); }
+  .n { display: none; }
+  .current { border-color: var(--rr-ember); box-shadow: 0 0 0 2px rgba(225, 168, 69, 0.25); }
+  .current .step { background: var(--rr-ember); }
+  .done .step { background: var(--rr-moss); }
+  .where { font: 500 var(--rr-text-xs) var(--rr-font-display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--rr-mint); margin: 0; }
+  .sum { color: var(--rr-text-muted); font-size: var(--rr-text-sm); margin: 0; }
+  .here { margin: 0; font: 700 var(--rr-text-xs) var(--rr-font-display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--rr-ember); }
+  .upcoming { opacity: 0.92; }
+</style>

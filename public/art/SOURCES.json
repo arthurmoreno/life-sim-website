@@ -1,0 +1,19 @@
+{
+  "keyart/keyart.png": "lifesim/itch-banner-voxel/keyart.png",
+  "keyart/banner.png": "lifesim/itch-banner-voxel/banner.png",
+  "keyart/logo.png": "lifesim/itch-banner-voxel/logo.png",
+  "keyart/emblem.png": "lifesim/itch-banner/emblem.png",
+  "portraits/warden.png": "lifesim/warden/portrait/scene.png",
+  "portraits/moccus.png": "lifesim/moccus/portrait/scene.png",
+  "portraits/boar.png": "lifesim/boar/portrait/scene.png",
+  "portraits/mirebound.png": "lifesim/mirebound/portrait/scene.png",
+  "portraits/salvager.png": "lifesim/salvager/portrait/scene.png",
+  "portraits/cataloguer.png": "lifesim/cataloguer/portrait/scene.png",
+  "scenes/meadow-golden-hour.png": "backgrounds/meadow-golden-hour/raw.png",
+  "scenes/bog-edge.png": "backgrounds/bog-edge/raw-0.png",
+  "scenes/cave-descent.png": "backgrounds/cave-descent/raw-0.png",
+  "scenes/salvage-yard-edge.png": "backgrounds/salvage-yard-edge/raw-0.png",
+  "sprites/boar-walk.png": "lifesim/boar/walk/sheet.png",
+  "sprites/survivor-walk.png": "lifesim/survivor/walk/sheet.png",
+  "sprites/oak-growth.png": "lifesim/oak-stages/growth-sheet.png"
+}

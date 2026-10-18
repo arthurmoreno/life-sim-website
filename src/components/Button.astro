@@ -1,0 +1,31 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  external?: boolean;
+  disabled?: boolean;
+  type?: 'button' | 'submit';
+  size?: 'md' | 'lg';
+}
+const { href, variant = 'primary', external = false, disabled = false, type = 'button', size = 'md' } = Astro.props;
+const Tag = href && !disabled ? 'a' : 'button';
+const attrs = Tag === 'a' ? { href, ...(external ? { target: '_blank', rel: 'noopener' } : {}) } : { type, disabled };
+---
+<Tag class:list={['btn', variant, size]} {...attrs}><slot /></Tag>
+<style>
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--rr-space-2);
+    font: 700 var(--rr-text-md) / 1 var(--rr-font-display); letter-spacing: 0.03em;
+    padding: 14px 22px; border-radius: 2px; border: 2px solid transparent; cursor: pointer;
+    text-decoration: none; min-height: 48px; transition: none;
+  }
+  .lg { font-size: var(--rr-text-lg); padding: 18px 30px; min-height: 60px; }
+  .primary { background: var(--rr-ember); color: var(--rr-ember-ink); box-shadow: 0 4px 0 var(--rr-ember-shadow); }
+  .primary:hover { background: var(--rr-ember-hover); color: var(--rr-ember-ink); }
+  .primary:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--rr-ember-shadow); }
+  .secondary { background: transparent; color: var(--rr-text); border-color: var(--rr-panel-border); }
+  .secondary:hover { border-color: var(--rr-mint); color: var(--rr-mint); }
+  .ghost { background: transparent; color: var(--rr-mint); padding-inline: 10px; }
+  .ghost:hover { background: rgba(154, 229, 213, 0.1); color: var(--rr-mint); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+</style>

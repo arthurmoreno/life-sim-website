@@ -1,0 +1,38 @@
+---
+import CTA from './CTA.astro';
+import NewsletterForm from './NewsletterForm.astro';
+import SocialLinks from './SocialLinks.astro';
+import { config, isPlaceholder, url } from '../lib/site';
+const patreon = isPlaceholder(config.links.patreon) ? null : config.links.patreon;
+const studio = isPlaceholder(config.developer.studio) ? config.developer.name : config.developer.studio;
+---
+<footer class="ftr" id="follow">
+  <div class="rr-wrap grid">
+    <section>
+      <h2>Follow the journey</h2>
+      <p class="rr-muted lede">Honest devlogs from a solo developer, from the first prototype to 1.0.</p>
+      <NewsletterForm />
+    </section>
+    <section class="right">
+      <CTA size="lg" />
+      <SocialLinks />
+      <ul class="links">
+        <li><a href={url('press/')}>Press kit</a></li>
+        <li><a href={url('roadmap/')}>Roadmap</a></li>
+        <li><a href={url('about/')}>About &amp; FAQ</a></li>
+        {patreon && <li><a href={patreon} rel="noopener">Support on Patreon</a></li>}
+      </ul>
+    </section>
+  </div>
+  <div class="rr-wrap legal">© {new Date().getFullYear()} {studio}. The Rewilding Rite is in development; everything here can change.</div>
+</footer>
+<style>
+  .ftr { margin-top: var(--rr-space-9); background: var(--rr-bg-raised); border-top: 2px solid var(--rr-panel); padding-top: var(--rr-space-8); }
+  .grid { display: grid; gap: var(--rr-space-7); }
+  h2 { margin-bottom: var(--rr-space-2); }
+  .lede { margin-bottom: var(--rr-space-5); }
+  .right { display: grid; gap: var(--rr-space-5); align-content: start; justify-items: start; }
+  .links { list-style: none; padding: 0; margin: 0; display: flex; gap: var(--rr-space-5); flex-wrap: wrap; }
+  .legal { padding-block: var(--rr-space-6); color: var(--rr-text-muted); font-size: var(--rr-text-sm); }
+  @media (min-width: 860px) { .grid { grid-template-columns: 1.2fr 1fr; } }
+</style>

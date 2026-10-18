@@ -1,0 +1,31 @@
+---
+import Tag from './Tag.astro';
+import PixelImage from './PixelImage.astro';
+import { url } from '../lib/site';
+interface Props { slug: string; title: string; date: Date; summary: string; tags: string[]; cover?: string; coverAlt?: string; }
+const { slug, title, date, summary, tags, cover, coverAlt = '' } = Astro.props;
+const iso = date.toISOString().slice(0, 10);
+const pretty = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+<article class="card">
+  {cover && <a class="thumb" href={url(`devlog/${slug}/`)} tabindex="-1" aria-hidden="true"><PixelImage src={cover} w={384} h={288} alt={coverAlt} scale={1} sm={1} crop /></a>}
+  <div class="body">
+    <p class="meta"><time datetime={iso}>{pretty}</time></p>
+    <h3><a href={url(`devlog/${slug}/`)}>{title}</a></h3>
+    <p class="summary">{summary}</p>
+    <p class="tags">{tags.map((t) => <Tag href={url(`devlog/?tag=${t}`)}>{t}</Tag>)}</p>
+  </div>
+</article>
+<style>
+  .card { display: grid; background: var(--rr-bg-raised); border: var(--rr-border); border-radius: var(--rr-radius); overflow: hidden; }
+  .thumb { display: block; border-bottom: var(--rr-border); background: var(--rr-bg); }
+  .thumb :global(.pi-crop) { width: 100%; height: 192px; }
+  .thumb :global(.pi-crop img) { top: -48px; }
+  .body { padding: var(--rr-space-5); display: grid; gap: var(--rr-space-3); align-content: start; }
+  .meta { font: 500 var(--rr-text-xs) var(--rr-font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rr-text-muted); margin: 0; }
+  h3 a { color: var(--rr-text); text-decoration: none; }
+  h3 a:hover { color: var(--rr-ember); }
+  .summary { color: var(--rr-text-muted); margin: 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--rr-space-2); margin: 0; }
+  .card:hover { border-color: var(--rr-ember); }
+</style>

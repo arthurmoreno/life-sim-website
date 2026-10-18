@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import DevlogCard from '../../components/DevlogCard.astro';
+import { url } from '../../lib/site';
+const posts = (await getCollection('devlog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+<Base title="Devlog" description="Honest development notes from The Rewilding Rite: simulation, engine, art, design and releases.">
+  <div class="rr-wrap rr-section">
+    <SectionHeading level="h1" eyebrow="Devlog" title="Notes from the wild" lede="What we built, what broke and what we learned. Newest first." />
+    <nav class="filters" aria-label="Filter by tag">
+      <a href={url('devlog/')} data-tag="" aria-current="true">All</a>
+      {tags.map((t) => <a href={url(`devlog/?tag=${t}`)} data-tag={t}>{t}</a>)}
+      <a class="rss" href={url('devlog/rss.xml')}>RSS</a>
+    </nav>
+    <div class="cards">
+      {posts.map((p) => (
+        <div data-tags={p.data.tags.join(' ')}>
+          <DevlogCard slug={p.id} title={p.data.title} date={p.data.date} summary={p.data.summary} tags={p.data.tags} cover={p.data.cover} coverAlt={p.data.coverAlt} />
+        </div>
+      ))}
+    </div>
+  </div>
+</Base>
+<script>
+  // Progressive enhancement: without JS every post is listed; with it, ?tag= filters the list.
+  const tag = new URLSearchParams(location.search).get('tag') ?? '';
+  document.querySelectorAll<HTMLElement>('[data-tags]').forEach((el) => {
+    el.hidden = !!tag && !el.dataset.tags!.split(' ').includes(tag);
+  });
+  document.querySelectorAll<HTMLElement>('.filters a[data-tag]').forEach((a) => {
+    a.toggleAttribute('aria-current', a.dataset.tag === tag);
+    if (a.dataset.tag !== tag) a.removeAttribute('aria-current');
+  });
+</script>
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: var(--rr-space-2); margin-bottom: var(--rr-space-6); }
+  .filters a { font: 500 var(--rr-text-sm) var(--rr-font-display); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; padding: 8px 14px; border: 2px solid var(--rr-panel-border); border-radius: 2px; color: var(--rr-text); }
+  .filters a:hover { border-color: var(--rr-mint); }
+  .filters a[aria-current] { background: var(--rr-ember); border-color: var(--rr-ember); color: var(--rr-ember-ink); }
+  .rss { margin-left: auto; }
+  .cards { display: grid; gap: var(--rr-space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+  [hidden] { display: none !important; }
+</style>
