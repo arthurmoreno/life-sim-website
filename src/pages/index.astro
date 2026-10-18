@@ -1,0 +1,137 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import Button from '../components/Button.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import HeroVideo from '../components/HeroVideo.astro';
+import AmbientSprites from '../components/AmbientSprites.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PillarBlock from '../components/PillarBlock.astro';
+import PixelImage from '../components/PixelImage.astro';
+import LoopClip from '../components/LoopClip.astro';
+import DevlogCard from '../components/DevlogCard.astro';
+import { config, url, primaryCta } from '../lib/site';
+const cta = primaryCta();
+
+const posts = (await getCollection('devlog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+
+---
+<Base>
+  <section class="hero">
+    <AmbientSprites />
+    <div class="rr-wrap inner">
+      <img class="logo" src={url('art/keyart/logo.png')} width="436" height="56" alt="The Rewilding Rite" />
+      <p class="genre">{config.genre}</p>
+      <HeroVideo />
+      <div class="actions">
+        <CTA size="lg" />
+        {!cta.fallback && <Button href={url('devlog/')} variant="secondary" size="lg">Read the devlog</Button>}
+      </div>
+      <StatusBadge />
+    </div>
+  </section>
+
+  <section class="rr-section">
+    <div class="rr-wrap what">
+      <SectionHeading eyebrow="What is it?" title="What is The Rewilding Rite?" />
+      <p class="big rr-measure">A pixel-art survival game set in a living wilderness. Water feeds the plants, boars eat the plants, wolves hunt the boars, and none of it waits for you. You gather, craft and descend, and you try to bring the wild back.</p>
+      <p class="loop">Gather. Craft. Descend. Rewild.</p>
+    </div>
+  </section>
+
+  <section class="rr-section" id="pillars">
+    <div class="rr-wrap">
+      <SectionHeading eyebrow="Four ideas" title="A world with its own rules" lede="Each pillar is labelled with where it stands today. This is an early prototype, and we say so." />
+      <PillarBlock n={1} title="A living ecosystem" status="In the prototype">
+        Water feeds the plants. A bottom-up food chain runs from plants to boars to wolves and other predators. The population is visible and it matters, not a hidden spreadsheet.
+        <Fragment slot="media">
+          <PixelImage src="art/scenes/meadow-golden-hour.png" w={384} h={288} alt="A meadow with a pond under a golden sky." scale={2} sm={1} crop />
+          <div class="overlay"><LoopClip src="art/sprites/boar-walk.png" frameW={24} frameH={24} frames={8} row={1} scale={4} label="A boar walking" /></div>
+        </Fragment>
+      </PillarBlock>
+      <PillarBlock n={2} title="Creatures that evolve" status="Partly in the prototype" flip>
+        Creature brains evolve live in the world through neuroevolution. The animals around you are learning, and what they learn depends on how you shape their world.
+        <Fragment slot="media">
+          <PixelImage src="art/scenes/bog-edge.png" w={384} h={288} alt="The edge of a bog at dusk." scale={2} sm={1} crop />
+        </Fragment>
+      </PillarBlock>
+      <PillarBlock n={3} title="Settlements that build themselves" status="Partly in the prototype">
+        Villages, towns and roads are generated and grow on their own, through simulated professions: hunting, gathering, building, cooking and farming.
+        <Fragment slot="media">
+          <PixelImage src="art/scenes/salvage-yard-edge.png" w={384} h={288} alt="A fenced salvage yard with a shed under a warm sky." scale={2} sm={1} crop />
+        </Fragment>
+      </PillarBlock>
+      <PillarBlock n={4} title="Survive, craft, descend" status="Coming in the demo" flip>
+        Gather, craft gear and defeat a guardian boss in each biome to unlock the next tier. The world reaches across the surface and down into caves and mines. The first guardian is the Warden.
+        <Fragment slot="media">
+          <PixelImage src="art/scenes/cave-descent.png" w={384} h={288} alt="A cave mouth lit by two lanterns." scale={2} sm={1} crop />
+        </Fragment>
+      </PillarBlock>
+      <p class="rr-muted note">Pillar visuals are concept art for now. Real gameplay clips arrive with the first public build.</p>
+    </div>
+  </section>
+
+  <section class="rr-section">
+    <div class="rr-wrap">
+      <SectionHeading eyebrow="In the game" title="Screenshots" lede="Captured from the Prototype v0 build." />
+      <div class="shots">
+        {[1, 2, 3, 4, 5, 6].map((n) => <div class="shot" role="img" aria-label={`Screenshot ${n} coming soon`}><span>Screenshot {n}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="rr-section lore">
+    <div class="rr-wrap">
+      <PixelImage src="art/scenes/cave-descent.png" w={384} h={288} alt="" scale={3} sm={1} crop class="strip" />
+      <blockquote>
+        <p>An ancient power, the Archon, wants to tame and perfect the wild, not destroy it. It rules through machines and constructs, because it never learned to control higher minds. Your role is to rewild.</p>
+        <footer><a href={url('devlog/')}>More in the devlog →</a></footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="rr-section">
+    <div class="rr-wrap">
+      <SectionHeading eyebrow="Devlog" title="Latest from the devlog" />
+      <div class="cards">
+        {posts.map((p) => <DevlogCard slug={p.id} title={p.data.title} date={p.data.date} summary={p.data.summary} tags={p.data.tags} cover={p.data.cover} coverAlt={p.data.coverAlt} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="rr-section hood">
+    <div class="rr-wrap">
+      <p class="rr-measure">Under the hood: a custom C++ engine, live neuroevolution and a deep simulation. <a href={url("devlog/?tag=engine")}>Read how it works →</a></p>
+    </div>
+  </section>
+
+  <section class="rr-section">
+    <div class="rr-wrap dev">
+      <PixelImage src="art/keyart/emblem.png" w={96} h={96} alt="" scale={1} sm={1} />
+      <p class="rr-measure">Made by {config.developer.name}, a solo developer in {config.developer.location}, working on nights and weekends. <a href={url('about/')}>More about the project →</a></p>
+    </div>
+  </section>
+</Base>
+<style>
+  .hero { position: relative; padding-block: var(--rr-space-7) var(--rr-space-8); background: radial-gradient(ellipse at 50% 30%, #0f1c4a 0%, var(--rr-bg) 65%); border-bottom: 2px solid var(--rr-panel); }
+  .inner { position: relative; display: grid; gap: var(--rr-space-5); justify-items: center; text-align: center; }
+  .logo { width: min(436px, 100%); height: auto; }
+  .genre { font: 500 var(--rr-text-sm) var(--rr-font-display); letter-spacing: 0.2em; text-transform: uppercase; color: var(--rr-mint); margin: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--rr-space-4); justify-content: center; }
+  .big { font-size: var(--rr-text-xl); line-height: 1.45; }
+  .loop { margin-top: var(--rr-space-5); font: 700 var(--rr-text-2xl) var(--rr-font-display); color: var(--rr-ember); }
+  .overlay { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); }
+  .note { margin-top: var(--rr-space-5); font-size: var(--rr-text-sm); }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: var(--rr-space-4); }
+  .shot { aspect-ratio: 16 / 9; display: grid; place-items: center; background: var(--rr-bg-raised); border: 2px dashed var(--rr-border-color, #2f4c6c); border-radius: var(--rr-radius); color: var(--rr-text-muted); }
+  .lore { background: var(--rr-bg-raised); border-block: 2px solid var(--rr-panel); }
+  .lore :global(.strip) { border: var(--rr-border); margin-bottom: var(--rr-space-6); height: 320px; width: 100%; }
+  .lore :global(.strip img) { top: 50%; transform: translate(-50%, -50%); }
+  blockquote { margin: 0 auto; max-width: 62ch; font-size: var(--rr-text-xl); line-height: 1.5; font-style: italic; text-align: center; }
+  blockquote footer { margin-top: var(--rr-space-4); font-size: var(--rr-text-md); font-style: normal; }
+  .cards { display: grid; gap: var(--rr-space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+  .hood { padding-block: var(--rr-space-5); }
+  .dev { display: flex; gap: var(--rr-space-5); align-items: center; flex-wrap: wrap; }
+  .dev :global(.pi) { margin: 0; }
+</style>

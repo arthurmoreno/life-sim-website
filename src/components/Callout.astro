@@ -1,0 +1,13 @@
+---
+interface Props { tone?: 'note' | 'warn'; title?: string; }
+const { tone = 'note', title } = Astro.props;
+---
+<aside class:list={['callout', tone]}>
+  {title && <strong>{title}</strong>}
+  <div><slot /></div>
+</aside>
+<style>
+  .callout { border-left: 4px solid var(--rr-mint); background: var(--rr-bg-raised); padding: var(--rr-space-4) var(--rr-space-5); border-radius: 0 var(--rr-radius) var(--rr-radius) 0; margin-block: var(--rr-space-5); }
+  .warn { border-left-color: var(--rr-ember); }
+  strong { display: block; font-family: var(--rr-font-display); color: var(--rr-text); margin-bottom: var(--rr-space-1); }
+</style>

@@ -1,0 +1,45 @@
+---
+/**
+ * Pixel art at an integer scale, always crisp.
+ * w/h: file size in px. art: file pixels per art pixel (2 when the art was drawn at 2x).
+ * scale: integer on-screen px per art pixel; sm: the same on narrow screens (<= 720px).
+ * crop: keep the integer scale on narrow screens and crop the sides instead of shrinking.
+ */
+interface Props {
+  src: string;
+  w: number;
+  h: number;
+  alt: string;
+  art?: number;
+  scale?: number;
+  sm?: number;
+  crop?: boolean;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+import { url } from '../lib/site';
+const { src, w, h, alt, art = 1, scale = 2, sm = scale, crop = false, loading = 'lazy', class: cls = '' } = Astro.props;
+const px = (s: number) => ({ w: (w / art) * s, h: (h / art) * s });
+const big = px(scale);
+const small = px(sm);
+---
+<span
+  class:list={['pi', crop && 'pi-crop', cls]}
+  style={`--w:${big.w}px;--h:${big.h}px;--sw:${small.w}px;--sh:${small.h}px`}
+>
+  <img class="rr-pixel" src={url(src)} width={big.w} height={big.h} alt={alt} loading={loading} decoding="async" />
+</span>
+<style>
+  .pi { display: block; width: var(--w); max-width: 100%; margin-inline: auto; }
+  .pi img { width: var(--w); height: var(--h); max-width: none; }
+  @media (max-width: 720px) {
+    .pi { width: var(--sw); }
+    .pi img { width: var(--sw); height: var(--sh); }
+  }
+  .pi-crop { overflow: hidden; width: min(var(--w), 100%); height: var(--h); position: relative; }
+  .pi-crop img { position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: var(--w); height: var(--h); }
+  @media (max-width: 720px) {
+    .pi-crop { width: 100%; height: var(--sh); }
+    .pi-crop img { width: var(--sw); height: var(--sh); }
+  }
+</style>

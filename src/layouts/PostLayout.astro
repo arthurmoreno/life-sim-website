@@ -1,0 +1,43 @@
+---
+import Base from './Base.astro';
+import Tag from '../components/Tag.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { url } from '../lib/site';
+interface Props { title: string; date: Date; summary: string; tags: string[]; }
+const { title, date, summary, tags } = Astro.props;
+const pretty = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+<Base title={title} description={summary}>
+  <article class="rr-wrap post">
+    <p class="back"><a href={url('devlog/')}>← All devlog posts</a></p>
+    <header>
+      <p class="meta"><time datetime={date.toISOString().slice(0, 10)}>{pretty}</time></p>
+      <h1>{title}</h1>
+      <p class="sum">{summary}</p>
+      <p class="tags">{tags.map((t) => <Tag href={url(`devlog/?tag=${t}`)}>{t}</Tag>)}</p>
+    </header>
+    <div class="prose"><slot /></div>
+    <aside class="sub rr-panel">
+      <h2>Follow the devlog</h2>
+      <p class="rr-muted">New posts every few weeks, written as things happen.</p>
+      <NewsletterForm />
+      <p><a href={url('devlog/rss.xml')}>RSS feed</a></p>
+    </aside>
+  </article>
+</Base>
+<style>
+  .post { max-width: 820px; padding-block: var(--rr-space-7) 0; }
+  .back { margin-bottom: var(--rr-space-5); }
+  .meta { font: 500 var(--rr-text-xs) var(--rr-font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rr-ember); margin-bottom: var(--rr-space-2); }
+  .sum { font-size: var(--rr-text-lg); color: var(--rr-text-muted); margin-top: var(--rr-space-4); }
+  .tags { display: flex; gap: var(--rr-space-2); flex-wrap: wrap; margin-top: var(--rr-space-4); }
+  .prose { margin-top: var(--rr-space-7); font-size: var(--rr-text-md); line-height: 1.7; }
+  .prose :global(h2) { margin: var(--rr-space-7) 0 var(--rr-space-3); font-size: var(--rr-text-xl); }
+  .prose :global(h3) { margin: var(--rr-space-6) 0 var(--rr-space-2); }
+  .prose :global(p), .prose :global(ul), .prose :global(ol) { margin-block: var(--rr-space-4); }
+  .prose :global(img) { image-rendering: pixelated; border: var(--rr-border); margin-block: var(--rr-space-5); }
+  .prose :global(blockquote) { margin: var(--rr-space-5) 0; padding-left: var(--rr-space-5); border-left: 4px solid var(--rr-ember); color: var(--rr-text-muted); }
+  .prose :global(pre) { padding: var(--rr-space-4); overflow-x: auto; border: var(--rr-border); border-radius: var(--rr-radius); font-size: var(--rr-text-sm); }
+  .prose :global(code:not(pre code)) { background: var(--rr-bg-raised); padding: 2px 6px; border-radius: 2px; }
+  .sub { margin-top: var(--rr-space-8); padding: var(--rr-space-6); display: grid; gap: var(--rr-space-3); }
+</style>

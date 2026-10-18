@@ -1,0 +1,16 @@
+---
+interface Props { eyebrow?: string; title: string; lede?: string; align?: 'left' | 'center'; level?: 'h1' | 'h2'; }
+const { eyebrow, title, lede, align = 'left', level = 'h2' } = Astro.props;
+const H = level;
+---
+<header class:list={['sh', align]}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <H>{title}</H>
+  {lede && <p class="lede">{lede}</p>}
+</header>
+<style>
+  .sh { display: grid; gap: var(--rr-space-3); margin-bottom: var(--rr-space-6); }
+  .center { text-align: center; justify-items: center; }
+  .eyebrow { font: 500 var(--rr-text-xs) / 1 var(--rr-font-display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--rr-ember); margin: 0; }
+  .lede { color: var(--rr-text-muted); font-size: var(--rr-text-lg); max-width: 60ch; line-height: 1.5; }
+</style>

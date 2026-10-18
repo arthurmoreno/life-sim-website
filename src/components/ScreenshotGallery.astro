@@ -1,0 +1,65 @@
+---
+import PixelImage from './PixelImage.astro';
+import { url } from '../lib/site';
+interface Shot { src: string; alt: string; caption: string; }
+interface Props { shots: Shot[]; }
+const { shots } = Astro.props;
+---
+<div class="grid">
+  {shots.map((s, i) => (
+    <button type="button" class="thumb" data-i={i} aria-label={`Open: ${s.caption}`}>
+      <PixelImage src={s.src} w={384} h={288} alt={s.alt} scale={1} sm={1} crop />
+    </button>
+  ))}
+</div>
+<dialog class="lightbox" aria-label="Screenshot viewer">
+  <button type="button" class="close" aria-label="Close">✕</button>
+  <button type="button" class="nav prev" aria-label="Previous">‹</button>
+  <figure>
+    <img class="rr-pixel" alt="" width="1152" height="864" />
+    <figcaption></figcaption>
+  </figure>
+  <button type="button" class="nav next" aria-label="Next">›</button>
+</dialog>
+<script define:vars={{ shots: shots.map((s) => ({ ...s, src: url(s.src) })) }}>
+  const dlg = document.querySelector('dialog.lightbox');
+  const img = dlg.querySelector('img');
+  const cap = dlg.querySelector('figcaption');
+  let cur = 0;
+  const show = (i) => {
+    cur = (i + shots.length) % shots.length;
+    img.src = shots[cur].src;
+    img.alt = shots[cur].alt;
+    cap.textContent = shots[cur].caption;
+  };
+  document.querySelectorAll('.thumb').forEach((b) =>
+    b.addEventListener('click', () => { show(+b.dataset.i); dlg.showModal(); })
+  );
+  dlg.querySelector('.close').addEventListener('click', () => dlg.close());
+  dlg.querySelector('.prev').addEventListener('click', () => show(cur - 1));
+  dlg.querySelector('.next').addEventListener('click', () => show(cur + 1));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+</script>
+<style>
+  .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .thumb { all: unset; box-sizing: border-box; cursor: zoom-in; display: block; width: min(384px, 100%); border: var(--rr-border); border-radius: var(--rr-radius); overflow: hidden; background: var(--rr-bg-raised); }
+  .thumb:hover { border-color: var(--rr-ember); }
+  .thumb:focus-visible { box-shadow: var(--rr-focus); }
+  .thumb :global(.pi-crop) { width: 100%; }
+  .lightbox { border: var(--rr-border); background: var(--rr-bg); color: var(--rr-text); padding: var(--rr-space-4); max-width: min(96vw, 1240px); width: 100%; }
+  .lightbox::backdrop { background: rgba(1, 4, 36, 0.88); }
+  .lightbox[open] { display: grid; grid-template-columns: auto 1fr auto; gap: var(--rr-space-3); align-items: center; }
+  figure { margin: 0; grid-column: 2; display: grid; gap: var(--rr-space-3); justify-items: center; }
+  figure img { width: 100%; max-width: 1152px; height: auto; aspect-ratio: 4 / 3; max-height: 78vh; object-fit: contain; }
+  figcaption { color: var(--rr-text-muted); }
+  .close { position: absolute; top: 8px; right: 8px; }
+  .nav, .close { all: unset; cursor: pointer; font: 700 2rem / 1 var(--rr-font-display); padding: 8px 14px; color: var(--rr-ember); }
+  .close { position: absolute; top: 4px; right: 8px; }
+  .nav:hover, .close:hover { color: var(--rr-ember-hover); }
+  .nav:focus-visible, .close:focus-visible { box-shadow: var(--rr-focus); }
+  @media (max-width: 720px) { .lightbox[open] { grid-template-columns: 1fr; } figure { grid-column: 1; } .nav { justify-self: center; } .prev { order: 2; } .next { order: 3; } }
+</style>

@@ -1,0 +1,27 @@
+---
+import { config, isPlaceholder } from '../lib/site';
+const d = config.developer;
+const rows: [string, string][] = [
+  ['Developer', d.name + (isPlaceholder(d.studio) ? '' : `, ${d.studio}`)],
+  ['Based in', d.location],
+  ['Platforms', config.platforms.join(', ')],
+  ['Release status', 'Prototype in development (first public build on itch.io)'],
+  ['Genre', config.genre],
+  ['Engine', 'Aetherion, a custom engine written in C++ and Python'],
+  ['Price', 'To be announced'],
+  ['Website', 'https://arthurmoreno.github.io/life-sim-website/'],
+];
+---
+<dl class="facts">
+  {rows.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+  {!isPlaceholder(d.email) && <div><dt>Contact</dt><dd><a href={`mailto:${d.email}`}>{d.email}</a></dd></div>}
+</dl>
+<style>
+  .facts { margin: 0; display: grid; border: var(--rr-border); border-radius: var(--rr-radius); background: var(--rr-bg-raised); }
+  .facts > div { display: grid; grid-template-columns: 12rem 1fr; gap: var(--rr-space-4); padding: var(--rr-space-3) var(--rr-space-5); border-top: 1px solid var(--rr-panel); }
+  .facts > div:first-child { border-top: 0; }
+  dt { font: 500 var(--rr-text-xs) / 1.8 var(--rr-font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rr-ember); }
+  dd { margin: 0; }
+  .todo { color: var(--rr-text-muted); font-style: italic; }
+  @media (max-width: 560px) { .facts > div { grid-template-columns: 1fr; gap: 0; } }
+</style>

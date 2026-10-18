@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import CTA from '../components/CTA.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import Tag from '../components/Tag.astro';
+import Callout from '../components/Callout.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import PixelImage from '../components/PixelImage.astro';
+import LoopClip from '../components/LoopClip.astro';
+import PillarBlock from '../components/PillarBlock.astro';
+import DevlogCard from '../components/DevlogCard.astro';
+import RoadmapLadder from '../components/RoadmapLadder.astro';
+import NowNextLater from '../components/NowNextLater.astro';
+import PressFactsheet from '../components/PressFactsheet.astro';
+import AssetDownload from '../components/AssetDownload.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import ScreenshotGallery from '../components/ScreenshotGallery.astro';
+
+// WCAG contrast, computed at build time so the page cannot lie.
+const lum = (hex: string) => {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+};
+const ratio = (a: string, b: string) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+const colors: [string, string][] = [
+  ['bg', '#010424'], ['bg-raised', '#0a1233'], ['panel', '#1e314b'], ['panel-border', '#2f4c6c'], ['moss', '#9bb02f'], ['moss-deep', '#4f5e1f'],
+  ['ember', '#e1a845'], ['ember-hover', '#f2c06a'], ['mint', '#9ae5d5'], ['blood', '#e0675c'], ['text', '#e8ecef'], ['text-muted', '#a3b2c4'],
+];
+const pairs: [string, string, string][] = [
+  ['text on bg', '#e8ecef', '#010424'], ['text on bg-raised', '#e8ecef', '#0a1233'], ['text on panel', '#e8ecef', '#1e314b'],
+  ['muted on bg', '#a3b2c4', '#010424'], ['muted on bg-raised', '#a3b2c4', '#0a1233'], ['muted on panel', '#a3b2c4', '#1e314b'],
+  ['mint (links) on bg', '#9ae5d5', '#010424'], ['ember on bg', '#e1a845', '#010424'], ['ember-ink on ember (button)', '#1a1f2e', '#e1a845'],
+  ['moss on bg', '#9bb02f', '#010424'], ['blood on bg', '#e0675c', '#010424'],
+];
+const space = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const spaceVals = [4, 8, 12, 16, 24, 32, 48, 64, 96, 128];
+const type = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
+const date = new Date('2026-10-18');
+---
+<Base title="Styleguide" noindex description="Design system showcase.">
+  <div class="rr-wrap rr-section">
+    <SectionHeading level="h1" eyebrow="Design system" title="Night in the wild" lede="Tokens and components of The Rewilding Rite website. Not linked from the site, not indexed." />
+
+    <h2>Colour tokens</h2>
+    <div class="swatches">{colors.map(([n, v]) => <div class="sw"><span style={`background:${v}`}></span><code>--rr-{n}</code><small>{v}</small></div>)}</div>
+    <h3>Contrast (WCAG AA needs 4.5 for body text)</h3>
+    <table><thead><tr><th>Pair</th><th>Ratio</th><th>AA</th></tr></thead><tbody>
+      {pairs.map(([n, f, b]) => { const r = ratio(f, b); return <tr><td><span class="chip" style={`color:${f};background:${b}`}>Aa</span> {n}</td><td>{r.toFixed(2)}:1</td><td>{r >= 4.5 ? 'pass' : r >= 3 ? 'large text only' : 'fail'}</td></tr>; })}
+    </tbody></table>
+
+    <h2>Typography</h2>
+    <p class="rr-muted">Display: Pixelify Sans (OFL). Body: Atkinson Hyperlegible (OFL). Both self-hosted.</p>
+    {type.map((t) => <p class="ts" style={`font-size:var(--rr-text-${t})`}><code>--rr-text-{t}</code> <span style="font-family:var(--rr-font-display)">Gather. Craft. Descend. Rewild.</span></p>)}
+    <p>Body text sits at a 1.6 line height in a humanist sans: <em>the wild remembers</em>, and it is easy to read for long stretches.</p>
+
+    <h2>Spacing</h2>
+    <div class="spacing">{space.map((n, i) => <div><code>--rr-space-{n}</code><i style={`width:${spaceVals[i]}px`}></i><small>{spaceVals[i]}px</small></div>)}</div>
+
+    <h2>Buttons</h2>
+    <div class="row">
+      <Button>Primary</Button><Button variant="secondary">Secondary</Button><Button variant="ghost">Ghost</Button><Button disabled>Disabled</Button><Button size="lg">Large</Button>
+    </div>
+    <p class="rr-muted">Hover, active and focus-visible (ember ring) states are live; tab to a button to see the ring.</p>
+    <h3>CTA (config-driven)</h3>
+    <div class="row"><CTA /><CTA size="lg" /></div>
+    <p class="rr-muted">Resolves from site.config.yaml: steam, then itch, then newsletter, then the devlog.</p>
+    <h3>Status badge</h3><StatusBadge />
+    <h3>Tags</h3><div class="row"><Tag>simulation</Tag><Tag>engine</Tag><Tag href="#">linked</Tag></div>
+    <h3>Callouts</h3>
+    <Callout title="Note">Prototype builds may wipe saves.</Callout>
+    <Callout tone="warn" title="Heads up">The Warden is not in the first build.</Callout>
+    <h3>Code block</h3>
+    <CodeBlock title="site.config.yaml">stage: prototype
+links:
+  itch: https://example.itch.io/rewilding-rite</CodeBlock>
+
+    <h2>Pixel art</h2>
+    <p class="rr-muted">Integer scales only, nearest-neighbour. The same 24 px boar at 1×, 2×, 4×:</p>
+    <div class="row end">
+      <LoopClip src="art/sprites/boar-walk.png" frameW={24} frameH={24} frames={8} row={1} scale={1} label="Boar, 1x" />
+      <LoopClip src="art/sprites/boar-walk.png" frameW={24} frameH={24} frames={8} row={1} scale={2} label="Boar, 2x" />
+      <LoopClip src="art/sprites/boar-walk.png" frameW={24} frameH={24} frames={8} row={1} scale={4} label="Boar, 4x" />
+      <LoopClip src="art/sprites/survivor-walk.png" frameW={24} frameH={24} frames={10} row={0} scale={4} label="Survivor walking" />
+    </div>
+    <h3>PixelImage</h3>
+    <PixelImage src="art/keyart/keyart.png" w={600} h={400} art={4} scale={2} sm={2} alt="Key art at 2x of the native art" />
+
+    <h2>Pillar block</h2>
+    <PillarBlock n={1} title="A living ecosystem" status="In the prototype">Example pillar text.<Fragment slot="media"><PixelImage src="art/scenes/meadow-golden-hour.png" w={384} h={288} alt="" scale={2} sm={1} crop /></Fragment></PillarBlock>
+
+    <h2>Screenshot gallery</h2>
+    <ScreenshotGallery shots={[{ src: 'art/portraits/warden.png', alt: 'The Warden', caption: 'The Warden' }, { src: 'art/portraits/moccus.png', alt: 'Moccus', caption: 'Moccus' }]} />
+
+    <h2>Devlog card</h2>
+    <div class="cardwrap"><DevlogCard slug="welcome-to-the-rewilding-rite" title="Example post title" date={date} summary="A short summary of the post." tags={['design']} cover="art/portraits/warden.png" /></div>
+
+    <h2>Roadmap ladder</h2><RoadmapLadder />
+    <h2>Now / Next / Later</h2><NowNextLater />
+    <h2>Press factsheet</h2><PressFactsheet />
+    <h2>Asset download</h2><div class="cardwrap"><AssetDownload href="art/keyart/emblem.png" label="Emblem" meta="PNG, 96 × 96" preview="art/keyart/emblem.png" previewW={96} previewH={96} /></div>
+    <h2>Newsletter form</h2><NewsletterForm />
+    <h2>Social links</h2><SocialLinks />
+  </div>
+</Base>
+<style>
+  h2 { margin: var(--rr-space-9) 0 var(--rr-space-4); border-top: 2px solid var(--rr-panel); padding-top: var(--rr-space-6); font-size: var(--rr-text-xl); }
+  h3 { margin: var(--rr-space-5) 0 var(--rr-space-3); color: var(--rr-ember); font-size: var(--rr-text-md); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--rr-space-3); }
+  .sw { display: grid; gap: 2px; }
+  .sw span { height: 56px; border: 2px solid var(--rr-panel-border); }
+  small, code { color: var(--rr-text-muted); font-size: var(--rr-text-xs); }
+  table { border-collapse: collapse; width: 100%; max-width: 640px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rr-panel); }
+  .chip { display: inline-block; padding: 2px 8px; font-weight: 700; border: 1px solid var(--rr-panel-border); margin-right: 8px; }
+  .ts { margin: 4px 0; }
+  .spacing { display: grid; gap: 6px; }
+  .spacing div { display: grid; grid-template-columns: 140px 1fr 60px; align-items: center; gap: 8px; }
+  .spacing i { height: 12px; background: var(--rr-moss); display: block; }
+  .row { display: flex; flex-wrap: wrap; gap: var(--rr-space-4); align-items: center; }
+  .end { align-items: flex-end; }
+  .cardwrap { max-width: 420px; }
+</style>

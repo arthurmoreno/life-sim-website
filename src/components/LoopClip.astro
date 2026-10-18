@@ -1,0 +1,43 @@
+---
+/**
+ * Placeholder-friendly looping sprite animation (CSS sprite sheet, steps timing, no easing).
+ * Plays only while in the viewport; reduced motion shows the first frame.
+ * When real gameplay clips exist, swap the sheet for <video muted loop playsinline> in this component.
+ */
+interface Props {
+  src: string;
+  frameW: number;
+  frameH: number;
+  frames: number;
+  cols?: number; // columns in the sheet (default = frames)
+  row?: number;
+  scale?: number;
+  ms?: number; // ms per frame
+  label: string;
+}
+import { url } from '../lib/site';
+const { src, frameW, frameH, frames, cols = frames, row = 0, scale = 4, ms = 110, label } = Astro.props;
+const w = frameW * scale;
+const h = frameH * scale;
+---
+<div
+  class="clip rr-pixel"
+  role="img"
+  aria-label={label}
+  style={`--w:${w}px;--h:${h}px;--sheet:${cols * w}px;--y:${-row * h}px;--end:${-frames * w}px;--dur:${frames * ms}ms;--steps:${frames};background-image:url(${url(src)})`}
+  data-loopclip
+>
+</div>
+<style>
+  .clip { width: var(--w); height: var(--h); background-repeat: no-repeat; background-size: var(--sheet) auto; background-position: 0 var(--y); animation: play var(--dur) steps(var(--steps)) infinite; animation-play-state: paused; }
+  .clip.on { animation-play-state: running; }
+  @keyframes play { to { background-position: var(--end) var(--y); } }
+  @media (prefers-reduced-motion: reduce) { .clip { animation: none; } }
+</style>
+<script>
+  // One observer for every clip on the page.
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle('on', e.isIntersecting);
+  });
+  document.querySelectorAll('[data-loopclip]').forEach((el) => io.observe(el));
+</script>

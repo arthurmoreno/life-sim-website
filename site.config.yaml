@@ -1,0 +1,24 @@
+# Single source of truth for the call to action and outbound links.
+# stage: prototype | demo | steam_coming_soon | early_access | released
+name: The Rewilding Rite
+short_name: Rewilding Rite
+genre: Life-simulation survival
+stage: prototype
+platforms: [Linux]
+version: v0
+# TODO(arthur): studio name, city, contact email
+developer:
+  name: Arthur Moreno
+  studio: TODO(arthur) studio name
+  location: Spain
+  email: TODO(arthur) contact email
+links:
+  itch: null            # TODO(arthur) itch.io page URL
+  steam: null           # when set, the primary CTA becomes "Wishlist on Steam"
+  newsletter: null      # TODO(arthur) Buttondown form action URL
+  youtube: null
+  bluesky: null
+  discord: https://discord.gg/2mT8XHNwmR
+  patreon: https://www.patreon.com/cw/ArthurMoreno
+  github: https://github.com/arthurmoreno/life-sim-website
+trailer_youtube_id: null  # null -> the hero uses the key art and looping sprites

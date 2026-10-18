@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import PixelImage from '../components/PixelImage.astro';
+import { url } from '../lib/site';
+---
+<Base title="Lost in the wild" noindex>
+  <div class="rr-wrap rr-section nf">
+    <PixelImage src="art/scenes/bog-edge.png" w={384} h={288} alt="The edge of a bog." scale={2} sm={1} crop />
+    <h1>Lost in the wild</h1>
+    <p class="rr-muted">That page does not exist, or it has wandered off.</p>
+    <Button href={url()}>Back to the clearing</Button>
+  </div>
+</Base>
+<style>.nf { display: grid; gap: var(--rr-space-5); justify-items: center; text-align: center; }</style>

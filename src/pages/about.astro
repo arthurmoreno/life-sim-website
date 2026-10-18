@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import { config, isPlaceholder, url } from '../lib/site';
+const discord = isPlaceholder(config.links.discord) ? null : config.links.discord;
+const patreon = isPlaceholder(config.links.patreon) ? null : config.links.patreon;
+const faq = [
+  ['What is The Rewilding Rite?', 'A pixel-art survival game set in a living wilderness, with an evolving ecosystem, settlements that grow themselves and a guardian boss in each biome.'],
+  ['When is it out?', 'There is no release date. The first public prototype is coming first, free on itch.io, then a demo, then the long road to 1.0. See the roadmap for where we are.'],
+  ['What platforms?', `${config.platforms.join(', ')} for the first prototype. A Windows build comes later.`],
+  ['Is it multiplayer?', 'No. It is a single-player game for now. We will say so here if that changes.'],
+  ['Will it be on Steam?', 'That is the plan, after the prototype and demo stages. The Steam page opens once the pitch is stable.'],
+  ['How can I support it?', 'Play the prototype, tell us where you got stuck (the Discord is the best place for that), and follow the devlog. That is the most useful thing today.' + (patreon ? ' If you also want to chip in, there is a Patreon link in the footer.' : '')],
+  ['Why is the prototype unstable?', 'Because it is a prototype. Saves may be wiped between builds, and we would rather you see the real game early than a polished promise.'],
+];
+---
+<Base title="About" description="About The Rewilding Rite, the developer behind it, and answers to common questions.">
+  <div class="rr-wrap rr-section">
+    <SectionHeading level="h1" eyebrow="About" title="A world that lives without you" />
+    <div class="rr-measure">
+      <p>The Rewilding Rite is an early, solo, part-time project with a long road ahead. It is made on Aetherion, a custom engine written in C++ and Python, by {config.developer.name}, a solo developer in {config.developer.location}.</p>
+      <p>The goal is a survival game where the ecosystem is the star: a world you can read, disturb and repair. We would rather show you something honest and unfinished than something polished and untrue.</p>
+    </div>
+    <h2>FAQ</h2>
+    <div class="faq">
+      {faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+    {discord && (
+      <section class="support">
+        <h2>Community</h2>
+        <p class="rr-measure">Join the Discord to follow development, report bugs and share your stories.</p>
+        <p><Button href={discord} external variant="secondary">Join the Discord</Button></p>
+      </section>
+    )}
+    {patreon && (
+      <section class="support">
+        <h2>Support the project</h2>
+        <p class="rr-measure">The game is free to try and made by one person in spare time. If you would like to help it keep growing, you can back it on Patreon. Playing the prototype and telling me where you got stuck helps just as much.</p>
+        <p><Button href={patreon} external variant="secondary">Support on Patreon</Button></p>
+      </section>
+    )}
+    <p class="more"><a href={url('roadmap/')}>See the roadmap</a> · <a href={url('press/')}>Press kit</a> · <a href={url('devlog/')}>Devlog</a></p>
+  </div>
+</Base>
+<style>
+  h2 { margin: var(--rr-space-8) 0 var(--rr-space-4); }
+  .faq { display: grid; gap: var(--rr-space-3); max-width: 80ch; }
+  details { background: var(--rr-bg-raised); border: var(--rr-border); border-radius: var(--rr-radius); padding: 0; }
+  summary { cursor: pointer; padding: var(--rr-space-4) var(--rr-space-5); font: 700 var(--rr-text-md) var(--rr-font-display); list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: '+ '; color: var(--rr-ember); }
+  details[open] summary::before { content: '− '; }
+  details p { padding: 0 var(--rr-space-5) var(--rr-space-5); color: var(--rr-text-muted); }
+  .more { margin-top: var(--rr-space-6); }
+</style>

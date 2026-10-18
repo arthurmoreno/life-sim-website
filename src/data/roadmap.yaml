@@ -1,0 +1,48 @@
+# Release ladder + Now / Next / Later. Edit this file only; the pages read it.
+# state: done | current | upcoming
+ladder:
+  - key: prototype
+    name: Prototype
+    where: itch.io, free, Linux
+    state: current
+    summary: The game as it is today, made shareable. Unstable, rough, and honest about it. Its job is to put the game in real hands, collect feedback and start the devlog.
+  - key: demo
+    name: Demo
+    where: itch.io, then Steam Playtest
+    state: upcoming
+    summary: A vertical slice of about ten hours, from the first meadow to the first guardian boss.
+  - key: steam
+    name: Steam page
+    where: Steam
+    state: upcoming
+    summary: Opens once the pitch has been stable for a few weeks, so every post can point to the wishlist button.
+  - key: early_access
+    name: Early Access
+    where: Steam
+    state: upcoming
+    summary: The first paid build, once it is worth its price as it stands today.
+  - key: release
+    name: "1.0"
+    where: Steam
+    state: upcoming
+    summary: The roadmap is done. A long road, travelled in the open.
+
+columns:
+  now:
+    title: Now
+    items:
+      - Shipping the first Linux prototype build
+      - "Stability: crash-free runs from the packaged build"
+      - A feedback key and a first devlog post
+  next:
+    title: Next
+    items:
+      - More prototype builds, each shaped by what testers report
+      - The Warden fight, made fair
+      - A locked shaft that leads down into the caves
+  later:
+    title: Later
+    items:
+      - Demo on itch.io, then Steam Playtest
+      - A Windows build
+      - Steam page, Early Access, and the long road to 1.0

@@ -1,0 +1,27 @@
+{
+  "name": "rewilding-rite-website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Official website of The Rewilding Rite",
+  "author": "Arthur Moreno",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/build-presskit.mjs && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "sync-assets": "node scripts/sync-assets.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
+    "@fontsource/pixelify-sans": "^5.3.0",
+    "astro": "^7.3.8",
+    "fflate": "^0.8.3",
+    "js-yaml": "^5.5.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

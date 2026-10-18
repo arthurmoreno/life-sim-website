@@ -1,0 +1,31 @@
+---
+import CTA from './CTA.astro';
+import { url } from '../lib/site';
+const links = [['Devlog', 'devlog/'], ['Roadmap', 'roadmap/'], ['Press', 'press/'], ['About', 'about/']];
+const path = Astro.url.pathname;
+---
+<header class="hdr">
+  <div class="rr-wrap bar">
+    <a class="brand" href={url()} aria-label="The Rewilding Rite, home">
+      <img class="rr-pixel" src={url('art/keyart/emblem.png')} width="40" height="40" alt="" />
+      <span>Rewilding Rite</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {links.map(([l, p]) => <li><a href={url(p)} aria-current={path.includes(`/${p}`) ? 'page' : undefined}>{l}</a></li>)}
+      </ul>
+    </nav>
+    <div class="cta"><CTA /></div>
+  </div>
+</header>
+<style>
+  .hdr { background: rgba(1, 4, 36, 0.92); border-bottom: 2px solid var(--rr-panel); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(4px); }
+  .bar { display: flex; align-items: center; gap: var(--rr-space-5); padding-block: var(--rr-space-2); flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: var(--rr-space-3); text-decoration: none; color: var(--rr-text); font: 700 var(--rr-text-lg) var(--rr-font-display); letter-spacing: 0.04em; text-transform: uppercase; margin-right: auto; }
+  .brand img { width: 40px; height: 40px; }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--rr-space-1); }
+  nav a { display: block; padding: 10px 12px; text-decoration: none; color: var(--rr-text); font: 500 var(--rr-text-sm) var(--rr-font-display); letter-spacing: 0.08em; text-transform: uppercase; min-height: 44px; }
+  nav a:hover, nav a[aria-current] { color: var(--rr-ember); }
+  .cta :global(.btn) { padding: 10px 16px; min-height: 44px; font-size: var(--rr-text-sm); }
+  @media (max-width: 760px) { .cta { display: none; } nav { order: 3; width: 100%; } nav ul { justify-content: space-between; } }
+</style>
