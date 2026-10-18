@@ -25,5 +25,5 @@ Posts are honest and regular rather than polished. Each public build gets a post
 
 ## What you can do
 
-Follow the devlog by RSS, and when the first build lands on itch.io, play it and tell us where you stopped, on the [Discord](https://discord.gg/2mT8XHNwmR).
+Follow the devlog by RSS, and when the first build lands on [itch.io](https://arthurmoreno.itch.io/the-rewilding-rite), play it and tell us where you stopped, on the [Discord](https://discord.gg/2mT8XHNwmR).
 

@@ -13,7 +13,7 @@ developer:
   location: Spain
   email: TODO(arthur) contact email
 links:
-  itch: null            # TODO(arthur) itch.io page URL
+  itch: https://arthurmoreno.itch.io/the-rewilding-rite
   steam: null           # when set, the primary CTA becomes "Wishlist on Steam"
   newsletter: null      # TODO(arthur) Buttondown form action URL
   youtube: null
